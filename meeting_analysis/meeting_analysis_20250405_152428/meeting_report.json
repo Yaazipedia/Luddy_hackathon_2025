@@ -1,0 +1,51 @@
+{
+  "analysis_id": "meeting_analysis_20250405_152428",
+  "timestamp": "20250405_152428",
+  "audio_source": "/Users/yashwipassary/Downloads/hackathon/meeting_example.mp4",
+  "transcript_statistics": {
+    "word_count": 353,
+    "estimated_sentence_count": 28,
+    "transcript_path": "meeting_analysis/meeting_analysis_20250405_152428/transcript/meeting_example_transcript_20250405_152433.txt"
+  },
+  "meeting_details": {
+    "title": "Hello everyone, thank you guys for coming to our weekly",
+    "date": null,
+    "participants": []
+  },
+  "key_topics": [
+    "idea",
+    "good",
+    "students",
+    "might",
+    "like"
+  ],
+  "summary": "A lot of students are skipping on Fridays. It might be good if we did something like a pancake breakfast to encourage them to come. I think that's a great idea. It might also be because a lot of students have been getting sick now that it's getting colder outside. Stuff like that. I think that's a good idea and it'll be a good reminder for the teachers as well. It might actually be a good idea if he spoke to the guidance counselor a little bit. Great, awesome, really good ideas here today.",
+  "action_items": {
+    "count": 2,
+    "items": [
+      {
+        "action": "should put up posters with tips for not getting sick since it's almost flu season",
+        "context": "e should put up posters with tips for not getting sick since it's almost flu season",
+        "assigned_to": "Unassigned",
+        "extracted_at": "2025-04-05 15:24:33"
+      },
+      {
+        "action": "We should put up posters with tips for not getting sick since it's almost flu season",
+        "context": "We should put up posters with tips for not getting sick since it's almost flu season",
+        "assigned_to": "We",
+        "extracted_at": "2025-04-05 15:24:33"
+      }
+    ],
+    "action_items_path": "meeting_analysis/meeting_analysis_20250405_152428/action_items/action_items_20250405_152433.json"
+  },
+  "output_files": {
+    "transcript": "meeting_analysis/meeting_analysis_20250405_152428/transcript/meeting_example_transcript_20250405_152433.txt",
+    "summary": "meeting_analysis/meeting_analysis_20250405_152428/summary/meeting_summary_20250405_152433.json",
+    "action_items": "meeting_analysis/meeting_analysis_20250405_152428/action_items/action_items_20250405_152433.json",
+    "visualizations": {
+      "wordcloud": "meeting_analysis/meeting_analysis_20250405_152428/visualizations/transcript_wordcloud.png",
+      "action_items_chart": "meeting_analysis/meeting_analysis_20250405_152428/visualizations/action_items_by_assignee.png",
+      "topics_chart": "meeting_analysis/meeting_analysis_20250405_152428/visualizations/topic_distribution.png"
+    }
+  }
+}
