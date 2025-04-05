@@ -244,4 +244,7 @@ def main():
         sys.exit(1)
 
 if __name__ == "__main__":
+    start_time = datetime.now()
     main()
+    end_time = datetime.now()
+    print(f"Execution time = {end_time - start_time}" )
