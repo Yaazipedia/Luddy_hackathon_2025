@@ -12,9 +12,9 @@ This AI-powered assistant transcribes, summarizes, and analyzes meetings in both
 - **Multi-language Support**: Process and analyze meetings in various languages
 - **Real-time Processing**: Live transcription and analysis during ongoing meetings
 - **Email Distribution**: Automatically send meeting summaries to participants or manually specified recipients
+- **Data Visualization**: Interactive visualizations of meeting data including word clouds, sentiment distribution, and action item assignment
 
 ## Project Structure
-
 ```
 .
 ├── code/                              # Core application code
@@ -30,6 +30,17 @@ This AI-powered assistant transcribes, summarizes, and analyzes meetings in both
 │   ├── sentiment_analysis.py          # Sentiment and tone analysis
 │   └── summarize_meeting.py           # Meeting summarization algorithms
 ├── meeting_analysis/                  # Analysis outputs and utilities
+│   ├── meeting_analysis_[TIMESTAMP]/  # Timestamped analysis for each meeting
+│   │   ├── action_items/              # Extracted action items
+│   │   ├── sentiment/                 # Sentiment analysis data
+│   │   ├── summary/                   # Meeting summaries
+│   │   ├── transcript/                # Full meeting transcript
+│   │   ├── visualizations/            # Visual representations of meeting data
+│   │   │   ├── action_items_by_assignee.png  # Action items distribution chart
+│   │   │   ├── sentiment_distribution.png    # Sentiment analysis visualization
+│   │   │   ├── topic_distribution.png        # Topic distribution chart
+│   │   │   └── transcript_wordcloud.png      # Word cloud from transcript
+│   │   └── meeting_report.json        # Complete meeting analysis in JSON format
 ├── meeting_recordings/                # Storage for meeting recordings
 ├── realtime_meetings/                 # Real-time meeting data
 ├── .DS_Store                          # MacOS system file
@@ -142,6 +153,10 @@ The email includes:
 Email distribution can be configured in the web dashboard or triggered programmatically.
 
 ## Web Dashboard
+```
+![image](https://github.com/user-attachments/assets/8b47ba85-6425-41fe-9634-6e8f65bc192d)
+
+```
 
 The project includes a web dashboard for visualizing meeting data, including:
 - Live transcription feed
@@ -150,6 +165,13 @@ The project includes a web dashboard for visualizing meeting data, including:
 - Sentiment analysis visualization
 - Language detection and translation options
 - Email distribution management for meeting summaries
+- Visualization Dashboard that captures word clouds, sentiment distribution, and action item assignment
+
+```
+
+![image](https://github.com/user-attachments/assets/3be6472d-8f9d-4079-8f99-801da049df2b)
+
+```
 
 ## Contributing
 
