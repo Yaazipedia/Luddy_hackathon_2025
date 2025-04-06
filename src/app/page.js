@@ -30,7 +30,7 @@ export default function MeetSmartDashboard() {
   const [showModal, setShowModal] = useState(false);
   const [translationFile, setTranslationFile] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
-  const [translatedSummary, setTranslatedSummary] = useState([]);
+  const [translationReport, settranslationReport] = useState({});
 
   const [newParticipant, setNewParticipant] = useState({
     name: "",
@@ -53,7 +53,7 @@ export default function MeetSmartDashboard() {
 
   const handleSendEmails = async () => {
     try {
-      const res = await fetch("http://10.20.31.189:8000/send-latest-report", {
+      const res = await fetch("http://10.16.89.32:8000/send-latest-report", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +86,7 @@ export default function MeetSmartDashboard() {
     formData.append("audio_file", file);
 
     try {
-      const res = await fetch("http://10.20.31.189:8000/process-audio-file", {
+      const res = await fetch("http://10.16.89.32:8000/process-audio-file", {
         method: "POST",
         body: formData,
       });
@@ -94,7 +94,7 @@ export default function MeetSmartDashboard() {
       const data = await res.json();
 
       const fetchFile = async (path) => {
-        const res = await fetch("http://10.20.31.189:8000/read-file", {
+        const res = await fetch("http://10.16.89.32:8000/read-file", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ file_path: path }),
@@ -147,7 +147,7 @@ export default function MeetSmartDashboard() {
 
       for (const [label, path] of entries) {
         try {
-          const res = await fetch("http://10.20.31.189:8000/read-file", {
+          const res = await fetch("http://10.16.89.32:8000/read-file", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -175,6 +175,51 @@ export default function MeetSmartDashboard() {
 
   const getSpeakerName = (speakerKey, idx) => {
     return participants[idx]?.name || speakerKey;
+  };
+  const handleTranslate = async (file, lang) => {
+    if (!file || !lang) {
+      console.error("File or language not provided");
+      return;
+    }
+
+    console.log(lang);
+
+    const formData = new FormData();
+    formData.append("audio_file", file);
+    formData.append("target_language", lang);
+
+    try {
+      const res = await fetch("http://10.16.89.32:8000/translate-audio-file", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const errText = await res.text();
+        console.error("Server response error:", res.status, errText);
+        throw new Error("Translation failed");
+      }
+
+      const data = await res.json();
+
+      const fetchFile = async (path) => {
+        const res = await fetch("http://10.16.89.32:8000/read-file", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ file_path: path }),
+        });
+        if (!res.ok) throw new Error(`Server responded ${res.status}`);
+        return res.json();
+      };
+
+      const translationRes = await fetchFile(data.translation_file_path);
+      console.log(translationRes);
+
+      settranslationReport(translationRes);
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong while translating.");
+    }
   };
 
   return (
@@ -412,7 +457,6 @@ export default function MeetSmartDashboard() {
             </div>
           </>
         )}
-
         {activeTab === "participants" && (
           <div className="flex-1 overflow-y-auto p-6">
             {/* Top Bar */}
@@ -469,7 +513,6 @@ export default function MeetSmartDashboard() {
             </div>
           </div>
         )}
-
         {activeTab === "visualizations" && (
           <div className="flex-1 overflow-y-auto p-6">
             <h2 className="text-xl font-semibold mb-4">Visualizations</h2>
@@ -560,67 +603,118 @@ export default function MeetSmartDashboard() {
           </div>
         )}
         {activeTab === "translate" && (
-          <>
+          <div className="flex-1 flex flex-col overflow-hidden">
+            {/* Header - fixed height */}
+            <header className="bg-white border-b border-gray-200 p-4 flex justify-between items-center">
+              <h2 className="text-xl font-semibold">Translation</h2>
+
+              <div>
+                <label className="block mb-1 font-medium text-sm">
+                  Select Language
+                </label>
+                <select
+                  value={selectedLanguage}
+                  onChange={(e) => setSelectedLanguage(e.target.value)}
+                  className="border p-2 rounded text-sm w-64"
+                >
+                  <option value="en">English</option>
+                  <option value="fr">French</option>
+                  <option value="es">Spanish</option>
+                  <option value="de">German</option>
+                  <option value="ja">Japanese</option>
+                  <option value="zh-CN">Chinese</option>
+                  <option value="hi">Hindi</option>
+                </select>
+              </div>
+
+              <div>
+                <button
+                  onClick={() =>
+                    document.getElementById("translation-file-input").click()
+                  }
+                  className="bg-indigo-600 text-white px-4 py-2 rounded-md flex items-center hover:bg-indigo-700"
+                >
+                  <Upload size={16} className="mr-2" />
+                  Upload
+                </button>
+                <input
+                  id="translation-file-input"
+                  type="file"
+                  accept=".mp3,.mp4,.wav,.txt"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0] || null;
+                    setTranslationFile(file);
+                    if (file && selectedLanguage) {
+                      handleTranslate(file, selectedLanguage);
+                    }
+                  }}
+                />
+              </div>
+            </header>
+
+            {/* Scrollable content below header */}
             <div className="flex-1 overflow-y-auto p-6 space-y-6">
-              <header className="bg-white border-b border-gray-200 p-4 flex justify-between items-center">
-                <h2 className="text-xl font-semibold">Translation</h2>
+              {translationReport && translationReport.content && (
+                <div className="space-y-6">
+                  <h3 className="text-lg font-semibold">
+                    Translation Report Analysis
+                  </h3>
 
-                {/* Language Dropdown */}
-                <div>
-                  <label className="block mb-1 font-medium text-sm">
-                    Select Language
-                  </label>
-                  <select
-                    value={selectedLanguage}
-                    onChange={(e) => setSelectedLanguage(e.target.value)}
-                    className="border p-2 rounded text-sm w-64"
-                  >
-                    <option value="en">English</option>
-                    <option value="fr">French</option>
-                    <option value="es">Spanish</option>
-                    <option value="de">German</option>
-                    <option value="ja">Japanese</option>
-                    <option value="zh-CN">Chinese</option>
-                    <option value="hi">Hindi</option>
-                  </select>
-                </div>
+                  {/* Original Transcription */}
+                  {translationReport.content.original_transcription && (
+                    <div>
+                      <h4 className="font-medium text-gray-700 mb-2">
+                        Original Transcription
+                      </h4>
+                      <div className="bg-white p-4 rounded shadow text-sm space-y-2 max-h-64 overflow-y-auto">
+                        {translationReport.content.original_transcription
+                          .split("\n")
+                          .filter((line) => line.trim())
+                          .map((line, idx) => (
+                            <p key={idx}>{line.trim()}</p>
+                          ))}
+                      </div>
+                    </div>
+                  )}
 
-                {/* Upload Button */}
-                <div>
-                  <button
-                    onClick={() =>
-                      document.getElementById("translation-file-input").click()
-                    }
-                    className="bg-indigo-600 text-white px-4 py-2 rounded-md flex items-center hover:bg-indigo-700"
-                  >
-                    <Upload size={16} className="mr-2" />
-                    Upload
-                  </button>
-                  <input
-                    id="translation-file-input"
-                    type="file"
-                    accept=".mp3,.mp4,.wav,.txt"
-                    className="hidden"
-                    onChange={(e) =>
-                      setTranslationFile(e.target.files?.[0] || null)
-                    }
-                  />
-                </div>
-              </header>
+                  {/* Translated Text */}
+                  {translationReport.content.translated_text && (
+                    <div>
+                      <h4 className="font-medium text-gray-700 mb-2">
+                        Translated Text
+                      </h4>
+                      <div className="bg-white p-4 rounded shadow text-sm space-y-2 max-h-64 overflow-y-auto">
+                        {translationReport.content.translated_text
+                          .split("\n")
+                          .filter((line) => line.trim())
+                          .map((line, idx) => (
+                            <p key={idx}>{line.trim()}</p>
+                          ))}
+                      </div>
+                    </div>
+                  )}
 
-              {/* Translated Summary Output */}
-              {translatedSummary.length > 0 && (
-                <div className="mt-6 space-y-2">
-                  <h3 className="font-semibold">Translated Summary:</h3>
-                  {translatedSummary.map((s, idx) => (
-                    <p key={idx} className="text-sm text-gray-700">
-                      {s}.
-                    </p>
-                  ))}
+                  {/* Summary */}
+                  {translationReport.content.summary && (
+                    <div>
+                      <h4 className="font-medium text-gray-700 mb-2">
+                        Summary
+                      </h4>
+                      <div className="bg-white p-4 rounded shadow text-sm space-y-2 max-h-64 overflow-y-auto">
+                        {translationReport.content.summary
+                          .split("\n")
+                          .filter((line) => line.trim())
+                          .map((line, idx) => (
+                            <p key={idx}>{line.trim()}</p>
+                          ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>
