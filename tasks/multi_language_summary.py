@@ -1,19 +1,21 @@
 import argparse
+from datetime import datetime
 import json
 import os
 import subprocess
 import tempfile
 import requests
 from googletrans import Translator
+import whisper
 
 language_options = {
-    "english": "en",
-    "spanish": "es",
-    "french": "fr",
-    "german": "de",
-    "chinese": "zh-CN",
-    "japanese": "ja",
-    "hindi": "hi",
+    "en": "english",
+    "es": "spanish",
+    "fr": "french",
+    "de": "german",
+    "zh-CN": "chinese",
+    "ja": "japanese",
+    "hi": "hindi",
 }
 
 def convert_audio_to_wav(input_file):
@@ -46,33 +48,35 @@ def convert_audio_to_wav(input_file):
             os.unlink(temp_wav)
         return None
 
-def transcribe_audio_with_whisper(audio_file_path, language_code):
+def transcribe_audio_with_whisper(audio_file_path):
     """Transcribe audio using OpenAI's Whisper model via API."""
-    # This is a placeholder for actual implementation
-    # In a real implementation, you would use a Whisper API or local model
-    print(f"Transcribing audio in {language_code}...")
-    
     # For the purpose of this example, we'll use a simple command-line approach
     # with whisper (if installed)
+    model = whisper.load_model("base")  # or "small", "medium", "large"
+    audio_language = model.transcribe(audio_file_path)  # .wav, .mp4 also supported
+    
+    if audio_language["language"] not in language_options:
+        raise ValueError("Language not supported!!!!")
+
     try:
         result = subprocess.run(
-            ["whisper", audio_file_path, "--language", language_code, "--model", "base"],
+            ["whisper", audio_file_path, "--language", audio_language["language"], "--model", "base"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
             check=True
         )
         transcription = result.stdout
-        return transcription
+        return transcription, audio_language["language"]
     except (subprocess.SubprocessError, FileNotFoundError):
         # If whisper isn't installed, fallback to a simpler approach
         print("Whisper not available. Using fallback transcription method...")
         
         # Simplified fallback for demonstration
         # In a real scenario, you might use a different API or library
-        return f"[Transcription would happen here for {language_code}]"
+        return f"[Transcription would happen here for {result["language"]}]"
 
-def translate_text_simple(text, source_lang_code, target_lang_code):
+async def translate_text_simple(text, source_lang_code, target_lang_code):
     """Translate text using a simpler and faster method."""
     if source_lang_code == target_lang_code:
         return text
@@ -80,7 +84,7 @@ def translate_text_simple(text, source_lang_code, target_lang_code):
     try:
         print(f"Translating from {source_lang_code} to {target_lang_code}...")
         translator = Translator()
-        result = translator.translate(text, src=source_lang_code, dest=target_lang_code)
+        result = await translator.translate(text, src=source_lang_code, dest=target_lang_code)
         return result.text
     except Exception as e:
         print(f"Translation error: {e}")
@@ -97,8 +101,18 @@ def summarize_text_simple(text, max_sentences=5):
     summary = '. '.join(sentences[:max_sentences]) + '.'
     return summary
 
-def save_results(original_text, translated_text, summary, output_file):
+def save_results(original_text, translated_text, summary, output_dir="translation_analysis"):
     """Save results to JSON file."""
+
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    analysis_id = f"translation_analysis_{timestamp}"
+    analysis_dir = os.path.join(output_dir, analysis_id)
+    os.makedirs(analysis_dir)
+    output_file = os.path.join(analysis_dir, 'translation_report.json')
+
     results = {
         "original_transcription": original_text,
         "translated_text": translated_text,
@@ -109,16 +123,16 @@ def save_results(original_text, translated_text, summary, output_file):
         json.dump(results, f, ensure_ascii=False, indent=4)
     
     print(f"Results saved to {output_file}")
-    return results
+    return output_file
 
-def multi_language_summary(audio_file: str, source_lanugage: str, target_language: str):
+async def multi_language_summary(audio_file: str, target_language_code: str):
     wav_file = convert_audio_to_wav(audio_file)
     if not wav_file:
         print("Failed to convert audio file. Please check the format.")
         return
     
     # Transcribe
-    original_text = transcribe_audio_with_whisper(wav_file, language_options[source_lanugage.lower()])
+    original_text, source_language_code = transcribe_audio_with_whisper(wav_file)
     print("\nOriginal Transcription:")
     print(original_text)
     
@@ -127,9 +141,9 @@ def multi_language_summary(audio_file: str, source_lanugage: str, target_languag
         os.unlink(wav_file)
     
     # Translate
-    if language_options[source_lanugage.lower()] != language_options[target_language.lower()]:
-        translated_text = translate_text_simple(original_text, language_options[source_lanugage.lower()], language_options[target_language.lower()])
-        print(f"\nTranslated to {target_language.lower()}:")
+    if source_language_code != target_language_code:
+        translated_text = await translate_text_simple(original_text, source_language_code, target_language_code)
+        print(f"\nTranslated to {language_options[target_language_code]}:")
         print(translated_text)
     else:
         translated_text = original_text
@@ -137,11 +151,13 @@ def multi_language_summary(audio_file: str, source_lanugage: str, target_languag
     
     # Summarize
     summary = summarize_text_simple(translated_text)
-    print(f"\nSummary in {target_language.lower()}:")
+    print(f"\nSummary in {language_options[target_language_code]}:")
     print(summary)
     
     # Save results
-    save_results(original_text, translated_text, summary, "translation_result.json")
+    output_file = save_results(original_text, translated_text, summary, "translation_result")
+
+    return {"translation_file_path": output_file}
 
 def main():
     parser = argparse.ArgumentParser(description='Fast multilingual audio transcription and translation')
@@ -156,7 +172,7 @@ def main():
         return
     
     # Get language preferences
-    source_language, target_language = get_user_language_preferences()
+    source_language, target_language = "English", "Hindi"
     print(f"\nProcessing from {source_language['name']} to {target_language['name']}...")
     
     # Convert audio if needed
@@ -189,7 +205,7 @@ def main():
     print(summary)
     
     # Save results
-    save_results(original_text, translated_text, summary, args.output)
+    save_results(original_text, translated_text, summary, "translation_analysis")
 
 if __name__ == "__main__":
     main()

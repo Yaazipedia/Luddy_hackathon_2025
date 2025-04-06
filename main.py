@@ -4,12 +4,14 @@ import shutil
 import os
 import json
 from typing import List
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, Form
 from pydantic import BaseModel, EmailStr
 from analyze_meeting import analyze_meeting
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from tasks.email_summary import send_meeting_summary
+from tasks.multi_language_summary import multi_language_summary
+from tasks.realtime_meeting import meeting_controller
 
 app = FastAPI()
 
@@ -133,3 +135,25 @@ async def send_latest_meeting_report(request: EmailRequest):
         raise HTTPException(status_code=500, detail="Failed to send email.")
 
     return {"message": "Meeting summary sent successfully", "recipients": request.recipients}
+
+@app.post("/translate-audio-file")
+async def translate_audio_file(
+    target_language: str = Form(...), 
+    audio_file: UploadFile = File(...)
+):
+    file_location = os.path.join(UPLOAD_DIR, audio_file.filename)
+    with open(file_location, "wb") as buffer:
+        shutil.copyfileobj(audio_file.file, buffer)
+
+    result = await multi_language_summary(file_location, target_language)
+    return result
+
+
+@app.post("/start-recording")
+def start_recording():
+    return {"message": meeting_controller.start()}
+
+@app.post("/stop-recording")
+def stop_recording():
+    result = meeting_controller.stop()
+    return {"message": "Recording stopped", "report": result}

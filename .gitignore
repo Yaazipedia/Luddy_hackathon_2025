@@ -5,3 +5,5 @@
 meeting_analysis/
 *.log
 uploaded_audio/
+realtime_meetings/
+translation_result/
