@@ -154,8 +154,7 @@ Email distribution can be configured in the web dashboard or triggered programma
 
 ## Web Dashboard
 ```
-![image](https://github.com/user-attachments/assets/8b47ba85-6425-41fe-9634-6e8f65bc192d)
-
+<img width="1514" alt="image" src="https://github.com/user-attachments/assets/c69467bb-33d2-4bfd-b44a-ddd42848ea57" />
 ```
 
 The project includes a web dashboard for visualizing meeting data, including:
@@ -168,8 +167,7 @@ The project includes a web dashboard for visualizing meeting data, including:
 - Visualization Dashboard that captures word clouds, sentiment distribution, and action item assignment
 
 ```
-
-![image](https://github.com/user-attachments/assets/3be6472d-8f9d-4079-8f99-801da049df2b)
+<img width="1586" alt="image" src="https://github.com/user-attachments/assets/e2074667-6fdd-4c2b-92ef-e56d51c02c0f" />
 
 ```
 
