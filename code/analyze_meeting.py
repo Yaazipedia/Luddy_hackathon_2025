@@ -13,6 +13,8 @@ import re
 from process_audio import process_audio
 from extract_items import extract_action_items
 from summarize_meeting import summarize_meeting
+from sentiment_analysis import analyze_conversation_sentiment, read_conversation_from_file
+
 
 # Configure logging
 logging.basicConfig(
@@ -90,15 +92,41 @@ def analyze_meeting(audio_file_path, output_dir="meeting_analysis"):
         )
         result["visualizations"] = viz_results
         
-        # Step 5: Generate final report
-        report = generate_report(result, transcript_text, action_items, summary)
+        # Step 5: Sentiment analysis from transcript file
+        sentiment_dir = os.path.join(analysis_dir, "sentiment")
+        os.makedirs(sentiment_dir, exist_ok=True)
+
+        sentiment_output_path = os.path.join(sentiment_dir, "sentiment_results.json")
+
+        logger.info("Running sentiment analysis on transcript...")
+        conversation_text = read_conversation_from_file(transcript_path)
+        sentiment_results = None
+        if conversation_text:
+            sentiment_results = analyze_conversation_sentiment(conversation_text)
+            with open(sentiment_output_path, 'w', encoding='utf-8') as f:
+                json.dump(sentiment_results, f, indent=2, ensure_ascii=False)
+            result["sentiment_path"] = sentiment_output_path
+            result["sentiment_summary"] = {
+                speaker: {
+                    "overall_sentiment": data["overall_sentiment"],
+                    "average_compound": data["average_compound"]
+                }
+                for speaker, data in sentiment_results.items()
+            }
+            logger.info(f"Sentiment analysis results saved to: {sentiment_output_path}")
+        else:
+            logger.warning("Transcript could not be read for sentiment analysis.")
+
+        # Step 6: Generate final report
+        report = generate_report(result, transcript_text, action_items, summary, sentiment_results)
         report_path = os.path.join(analysis_dir, "meeting_report.json")
         with open(report_path, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2)
         result["report_path"] = report_path
-        
+
         logger.info(f"Meeting analysis completed successfully. Results saved to: {analysis_dir}")
         return result
+
     
     except Exception as e:
         logger.error(f"Error during meeting analysis: {str(e)}")
@@ -179,7 +207,8 @@ def generate_visualizations(transcript_text, action_items, summary, output_dir):
     
     return visualization_paths
 
-def generate_report(result, transcript_text, action_items, summary):
+def generate_report(result, transcript_text, action_items, summary, sentiment_results=None):
+
     """Generate a comprehensive report from all analysis components."""
     logger.info("Generating final report...")
     
@@ -199,6 +228,7 @@ def generate_report(result, transcript_text, action_items, summary):
         "analysis_id": result["analysis_id"],
         "timestamp": result["timestamp"],
         "audio_source": result["audio_file"],
+        "sentiment_analysis": sentiment_results if sentiment_results else "Not available",
         "transcript_statistics": {
             "word_count": word_count,
             "estimated_sentence_count": sentence_count,

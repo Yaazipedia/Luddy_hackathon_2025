@@ -1,0 +1,155 @@
+[Speaker_0]:
+ Yeah, talented assessment. So we have an update from Janiyana. The dates haven't been confirmed 
+
+[Speaker_1]:
+ yet, but it will be sometime from mid-up to a bit through to December. I think E-group 
+
+[Speaker_0]:
+ sign office is expected to be mid-december before everyone goes on holiday. They've got  a draft timeline in there that updates the dates and the handbook yet. The big changes 
+
+[Speaker_1]:
+ we're moving to do in workday, that's not available yet. I haven't seen a demo of it. 
+
+[Speaker_0]:
+ I don't know what questions will be asked, but there's an optional self-evaluation, which  will move into workday and the work that we do has managed to also happen in workday. 
+
+[Speaker_1]:
+ At the moment, some people are using the Google Docs, which is listed on the term 
+
+[Speaker_0]:
+ assessment page for self-evaluation and for the manager work. I'd suggest continuing  to use those docs until we get access to workday and see what the exact difference is on. 
+
+[Speaker_1]:
+ Each I and Jerry read only. Does anybody want to discuss them? 
+
+[Speaker_0]:
+ The Thomas? Yeah, item K. Yeah, apologies for the late, like live addition to the agenda 
+
+[Speaker_1]:
+ on this one. But one more note on a change we're rolling out with insecure, three-blight  weight, and then we're establishing a second team within dynamic analysis. And so issue 
+
+[Speaker_0]:
+ is there, so if someone would like to follow along or ask any questions about it, the plan 
+
+[Speaker_1]:
+ for right now, as I'm going to be serving as a team, is actually the EM and in addition 
+
+[Speaker_0]:
+ to normally scheduled some duties for left and right away putting it. And so I'll  ask, what's the difference? What do you think will you take or how will you differentiate? 
+
+[Speaker_1]:
+ Was not planning to differentiate. It's just a second team within dynamic analysis. We're  not creating a new group, which I think is the same pattern that's happening within  thread insights as well as just two teams. No, I know that there's tangerine and there's 
+
+[Speaker_0]:
+ navy. I'm not a tangerine person myself. I don't know. I figured out. I figured out. 
+
+[Speaker_1]:
+ I figured out. The difference between what's happening in thread insights and within dynamic 
+
+[Speaker_0]:
+ analysis is that this is a split of long feature category. Even though we're keeping 
+
+[Speaker_1]:
+ that we're not spreading the grid, there's the distinction along with who's working on  specific feature categories themselves. So where the fracture point is happening, 
+
+[Speaker_0]:
+ you know, gives a little difference, but the approach and effect are the same.  I hope. So we're going to big rocks and hot issues. 
+
+[Speaker_1]:
+ Section, I don't know if there's a big rock, but kind of belong here perhaps more now.  So did that survey, we've got an awesome response rate from the team on how to improve the  MR rate for the team. And then I took a really long time to go to other results and summarize  and make initial recommendations to lost a little bit of the limit, but might have caught  another effect on functional prioritization and the customer escalation. So since then,  this is actually used by John Hope to lead a discussion at the development offset last week,  on improving engineering velocity. It's one of the things you used to power it. So that value  I've seen no comments, I think, for anybody in this group, which means either no time,  forgot about it, or it doesn't, we looked at it and it doesn't have much value. And any of those  things are okay, I'm just curious where the group landed.  If you haven't taken a look yet to see if there's anything you want to take away from it from  things you might want to consider, it's not for me to do so and consider it, not to do, but to consider.  Anybody got any chance to read it yet? And think about it, we're not just yet.  It's not my guess is perhaps everybody's really dizzy and they haven't looked yet.  I mean at a high level J-Neil, we talked about changes. I think J-E've already looked at 
+
+[Speaker_0]:
+ some changes around refinement. That was nearer, that you were going to look at for interview,  some report that by the end of the quarter. Tiago and Neil, I can't remember what we ended 
+
+[Speaker_1]:
+ up with for three times science. Yeah, I'm hoping that MRRade has kind of been  artifacted by product of some other actions. The big thing we're doing is more  everywhere, like randomness, not schedule, not PM, necessarily actions, or issues.  And that actually is creating some more additional work like it's just like three  times more, that one changes the pace, moves just something else, moves the daily.  And these are generally smaller types of issues too, so that quicker to knock out.  Therefore they create more and more, so it's just been a cool product.  So I think that's helping us succeed there.  Yeah, we're also seeing some success with, we've implemented like a weekly refinement 
+
+[Speaker_0]:
+ meeting, kind of trek in, make sure that stories are broken down tiny enough. 
+
+[Speaker_1]:
+ I think with smaller bits of work, we're seeing the higher MRRade. 
+
+[Speaker_0]:
+ It's invatable whether or not that's like just inflated, right? Like you can work on a small piece 
+
+[Speaker_1]:
+ of code and ship it, and you can do so a lot of times here in a good higher MRRade, 
+
+[Speaker_0]:
+ we're trying to be reasonable with that. I am noticing a nice take up  after implementing the refinement meeting, so let's hope for the best. 
+
+[Speaker_1]:
+ I was going to say one note on refinement in magnum analysis, we're experimenting  with the new section in our final picture, from looking forward. And in there, we're using  that as a base find where we add issues that we think need refinement that will most likely  be worked on in the next one to three milestones. So we're using that as kind of a base cover  for some engineer to go in and add their issues and make sure they get refined within this model.  So not necessarily any implementation, but just refinement itself.  I should stop talking on mute. Thank you. The more, Thomas, you want to verbalize your phone?  Yeah, I'll verbalize, and then I'll say more, and then I'll finish writing what I was going to put  down underneath at just a moment. So this was an edge of an item at the end, and I can say it now,  in the secure stage instead of the analyzer team. So this is a topic yesterday, so I would assume 
+
+[Speaker_0]:
+ that this is more, if I get the batch, it's a read, but not digest the content. And what I was about 
+
+[Speaker_1]:
+ to write, and I am cautious in saying this because it almost comes across a smug, and that is not my 
+
+[Speaker_0]:
+ intent in that looking at the MR8 within set compared to company-wide historically it runs two 
+
+[Speaker_1]:
+ to three in-mars per engineer per mop hire. And I think a good bit is that has to do with the,  I mean, we've taken this to be true, or at least it's to be true, in that it's smaller themes 
+
+[Speaker_0]:
+ that are working closely together in less busy projects than we see within the RELES platform itself,  which does have an impact. It's not to say that we cannot do better.  But the comparison, the favorable comparison, at least to me, and I will admit that at times  will lessen the urgency on this particular topic, and I have to admit that by a set I have. 
+
+[Speaker_1]:
+ Thanks, everyone. So I didn't say to come to the issue, but I've totally fine. People found some  of it useful, some of the analysis useful, and that's great. So I will close the issue,  the putting in the link to these notes. Good stuff. Thomas, you've got item B.  Okay. All right, after this, then. All right, third ramp and the can't or won't fix security issues  that way maybe we're maybe having this. So we've got them, the security issues that are subject to  set up. If you have a feature category that is SIPPS compliant or certified, you're probably going  to be part of the set ramp evaluation and any security issue that has a CVE associated with 
+
+[Speaker_0]:
+ it, which means dependency or container scanning specifically, has to have a remediation plan,  even if they're false positives. And so that's led to a separate discussion on what do we need to do 
+
+[Speaker_1]:
+ for, do we need to do anything related to security findings on the commercial versions of  the analyzer specifically? That was the title for this particular conversation, because on container  scanning we get a lot of findings related to devian based images is that that project does not 
+
+[Speaker_0]:
+ shift to six four or won't fix ship a six four. So there is a separate thread that is going on  here about what to do and can we do the addition plus simple for this class for this class of 
+
+[Speaker_1]:
+ findings. The TLDR is below and there's a couple of options that are being brainstormed  within this particular thread. So when I know I've said a lot of words, I didn't say it well, 
+
+[Speaker_0]:
+ but I wanted to bring it here. If there was any questions or commentary. 
+
+[Speaker_1]:
+ Nothing directly related to what you've just talked about, but sort of related. For FedRAMP, you're looking 
+
+[Speaker_0]:
+ at any since related security issues that have been raised. How far are you going in terms of  orbiting to find anything that hasn't already been identified? There is also a link in another 
+
+[Speaker_1]:
+ issue, a separate issue that has instructions from ACSEC on what they would like us to do 
+
+[Speaker_0]:
+ as far as setting up container scanning. They have set up a project with a single configuration 
+
+[Speaker_1]:
+ that they're asking us to use. There is some debate as to how that project has been configured  because it uses a combination of three container scanning tools rather than one. 
+
+[Speaker_0]:
+ They've asked us to use that as a baseline for the tips images specifically,  since they're UVI or the UVI specific images. They're equivalent to one in line to even though  they're different meanings. The TLDAT told to ACSEC.  Go ahead. 
+
+[Speaker_1]:
+ The TLDAT is a stable counterpart. He has been quite responsive in TINA and he's also helping 
+
+[Speaker_0]:
+ to take down answers when he doesn't have them. He's been a big help thus far. 
+
+[Speaker_1]:
+ Go ahead. In the whole way, from the development staff meeting,  I can't be a paste of info. The TLDAT is, can folks request to me and my peers,  can folks check what they're seeing to see if the approvals are effective. This is the new  approval rules on segregation. They've asked us to group. Not exactly here, but in the group,  they shouldn't be. They all mean they're optional. But has this had an impact? Is new approval rules?  And I totally, I've seen a few cases where team members have realized that they need to give an 
+
+[Speaker_0]:
+ additional approval, but I'm not aware that it's actually slowing things down. 
+
+[Speaker_1]:
+ Okay. No news is good news on this properly. Unless it's happening and not  noticing it, we're just letting things down. But just keep an eye on it and give it to us. 
+
+[Speaker_0]:
+ Everyone, please. It's a good stuff. So, with recent changes, we've done a couple of different 
+
+[Speaker_1]:
+ changes with the secure, real government, secure data up team. And this net is, I've just  compared the name of my team with my peers. My peers have one word team name, op step, create,  et cetera. Mine is set growth and data science, which is pretty wordy. It also makes  it that I'm going to dash forward. I have to pull data from multiple places that trust my teams.  So, I was thinking about a one word name. I've started to get feedback on it.  Naming things is really important. I'd get that to name the right kinds of things and give them  good names. So, I'm going to run by David, the center tomorrow. He's a great person about  systems also. I landed on enrichment because what we do makes other things better. We enrich them.  It's kind of a very broad term, but it does cover what we do. Not sure we're going to change the name,  which I'm not sure it's going to affect anyone, but me. That's actually my intent. It's  only affects my stuff, not everyone else's. But everyone else is in a small way, or others  in a small way, but we'll see. Any thoughts on this? Good idea, bad idea. I'm not ready today.  So, I'm looking for feedback.  The other example relate to why the six.
