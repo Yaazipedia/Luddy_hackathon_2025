@@ -1,5 +1,0 @@
-{
-  "error": "cannot access local variable 'sentiment_results' where it is not associated with a value",
-  "stage": "meeting_analysis/meeting_analysis_20250406_003642/transcript/meeting_15mins_transcript_20250406_003722.txt",
-  "timestamp": "2025-04-06 00:37:22"
-}
