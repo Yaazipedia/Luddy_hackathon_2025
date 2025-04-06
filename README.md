@@ -1,5 +1,5 @@
 # Luddy_hackathon_2025
-# AI-Powered Meeting Companion
+# MeetSmart - AI-Powered Meeting Companion
 
 ## Overview
 This AI-powered assistant transcribes, summarizes, and analyzes meetings in both real-time and from recorded files. It helps teams quickly understand discussions, identify action items, analyze sentiment, and extract key information from meetings across multiple languages.
@@ -17,18 +17,19 @@ This AI-powered assistant transcribes, summarizes, and analyzes meetings in both
 ## Project Structure
 ```
 .
-├── code/                              # Core application code
-│   ├── __pycache__/                   # Python cache directory
-│   ├── analyze_meeting.py             # Meeting analysis and sentiment visualization
-│   ├── email_summary.py               # Email generation for meeting summaries
-│   ├── extract_items.py               # Extract action items and decisions
-│   ├── multi_language_summary.py      # Multi-language support for summaries
-│   ├── process_audio.py               # Audio processing pipeline
-│   ├── process_audio_original.py      # Original audio processing implementation
-│   ├── realtime_meeting.py            # Real-time meeting transcription
-│   ├── recorder.py                    # Audio recording functionality
-│   ├── sentiment_analysis.py          # Sentiment and tone analysis
-│   └── summarize_meeting.py           # Meeting summarization algorithms
+├── backend/                              # Core application code
+│   ├── tasks/                   # Python cache directory
+│       ├── email_summary.py               # Email generation for meeting summaries
+│       ├── extract_items.py               # Extract action items and decisions
+│       ├── multi_language_summary.py      # Multi-language support for summaries
+│       ├── process_audio.py               # Audio processing pipeline
+│       ├── process_audio_original.py      # Original audio processing implementation
+│       ├── realtime_meeting.py            # Real-time meeting transcription
+│       ├── recorder.py                    # Audio recording functionality
+│       ├── sentiment_analysis.py          # Sentiment and tone analysis
+│       └── summarize_meeting.py           # Meeting summarization algorithms
+│   ├── analyze_meeting.py/                # Python Functions driver code
+│   ├── main.py/                           # FastAPI driver code
 ├── meeting_analysis/                  # Analysis outputs and utilities
 │   ├── meeting_analysis_[TIMESTAMP]/  # Timestamped analysis for each meeting
 │   │   ├── action_items/              # Extracted action items
