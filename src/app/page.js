@@ -565,6 +565,26 @@ export default function MeetSmartDashboard() {
               <header className="bg-white border-b border-gray-200 p-4 flex justify-between items-center">
                 <h2 className="text-xl font-semibold">Translation</h2>
 
+                {/* Language Dropdown */}
+                <div>
+                  <label className="block mb-1 font-medium text-sm">
+                    Select Language
+                  </label>
+                  <select
+                    value={selectedLanguage}
+                    onChange={(e) => setSelectedLanguage(e.target.value)}
+                    className="border p-2 rounded text-sm w-64"
+                  >
+                    <option value="en">English</option>
+                    <option value="fr">French</option>
+                    <option value="es">Spanish</option>
+                    <option value="de">German</option>
+                    <option value="ja">Japanese</option>
+                    <option value="zh-CN">Chinese</option>
+                    <option value="hi">Hindi</option>
+                  </select>
+                </div>
+
                 {/* Upload Button */}
                 <div>
                   <button
@@ -585,59 +605,6 @@ export default function MeetSmartDashboard() {
                       setTranslationFile(e.target.files?.[0] || null)
                     }
                   />
-                </div>
-
-                {/* Language Dropdown */}
-                <div>
-                  <label className="block mb-1 font-medium text-sm">
-                    Select Language
-                  </label>
-                  <select
-                    value={selectedLanguage}
-                    onChange={(e) => setSelectedLanguage(e.target.value)}
-                    className="border p-2 rounded text-sm w-64"
-                  >
-                    <option value="en">English</option>
-                    <option value="fr">French</option>
-                    <option value="es">Spanish</option>
-                    <option value="de">German</option>
-                    <option value="it">Italian</option>
-                    <option value="zh">Chinese</option>
-                    <option value="hi">Hindi</option>
-                  </select>
-                </div>
-
-                {/* Translate Button */}
-                <div>
-                  <button
-                    onClick={async () => {
-                      if (!translationFile)
-                        return alert("Please upload a file");
-
-                      const formData = new FormData();
-                      formData.append("file", translationFile);
-                      formData.append("target_language", selectedLanguage);
-
-                      try {
-                        const res = await fetch(
-                          "http://10.20.31.189:8000/translate-summary",
-                          {
-                            method: "POST",
-                            body: formData,
-                          }
-                        );
-                        if (!res.ok) throw new Error("Translation failed");
-                        const data = await res.json();
-                        setTranslatedSummary(data.summary || []);
-                      } catch (err) {
-                        alert("Error translating summary");
-                        console.error(err);
-                      }
-                    }}
-                    className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 text-sm"
-                  >
-                    Translate
-                  </button>
                 </div>
               </header>
 
